@@ -1,5 +1,5 @@
-const User= require("../models/user")
-const { Order} = require('../models/order');
+const User = require('../models/user');
+const { Order } = require('../models/order');
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
 exports.userById = (req, res, next, id) => {
@@ -37,8 +37,8 @@ exports.read = (req, res) => {
 
 exports.update = (req, res) => {
     // console.log('UPDATE USER - req.user', req.user, 'UPDATE DATA', req.body);
-    const { name,email, password } = req.body;
- 
+    const { name, password } = req.body;
+
     User.findOne({ _id: req.profile._id }, (err, user) => {
         if (err || !user) {
             return res.status(400).json({
@@ -52,20 +52,7 @@ exports.update = (req, res) => {
         } else {
             user.name = name;
         }
-        if (err || !user) {
-            return res.status(400).json({
-                error: 'User not found'
-            });
-        }
-        if (!email) {
-            return res.status(400).json({
-                error: 'Email is required'
-            });
-        } else {
-            user.email = email;
-        }
- 
- 
+
         if (password) {
             if (password.length < 6) {
                 return res.status(400).json({
@@ -75,7 +62,7 @@ exports.update = (req, res) => {
                 user.password = password;
             }
         }
- 
+
         user.save((err, updatedUser) => {
             if (err) {
                 console.log('USER UPDATE ERROR', err);
@@ -89,6 +76,7 @@ exports.update = (req, res) => {
         });
     });
 };
+
 exports.addOrderToUserHistory = (req, res, next) => {
     let history = [];
 

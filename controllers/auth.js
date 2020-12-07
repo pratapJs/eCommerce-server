@@ -10,7 +10,8 @@ exports.signup=(req, res)=>{
 if(error){
    
     return res.status(400).json({
-        error:errorHandler(error)
+        //error:errorHandler(error)
+        error:'Email is taken'
     })
 }
 user.salt=undefined;
@@ -61,7 +62,7 @@ res.json({
 
 exports.requireSignin = expressJwt({
     secret:process.env.JWT_SECRET,
-    algorithms: ["HS256"],
+   algorithms: ["HS256"],
     userProperty:"auth"
 })
 
